@@ -5,20 +5,20 @@ $(document).ready(function(){
 /* FUNCTION EXECUTION HERE */
   console.log('Go forth and code!');
 
+  //AJAX data
+
+  function getRedditData(data){
+    $.ajax({
+      method: 'GET',
+      url: frontPage,
+      dataType: 'json',
+      success: onSuccess,
+      error: onError
+    });
+  }
+  getRedditData();
+
 });
-
-//AJAX data
-
-function getRedditData(data){
-  $.ajax({
-    method: 'GET',
-    url: frontPage,
-    dataType: 'json',
-    success: onSuccess,
-    error: onError
-  });
-}
-getRedditData();
 
 //Method Functions for AJAX
 
@@ -29,10 +29,11 @@ function onSuccess(data){
   var grabDataArray = data.data.children;
     for(var i = 0; i < grabDataArray.length; i++) {
       $('#main').append(`<h3> ${grabDataArray[i].data.title} </h3>\n <hr>`);
-      $('#main').append(`<h5> ${grabDataArray[i].data.author} to ${grabDataArray[i].data.subreddit_name_prefixed}</h5> <p></p>`);
+      $('#main').append(`<h5> ${grabDataArray[i].data.author} to ${grabDataArray[i].data.subreddit_name_prefixed}</h5>\n<p></p>`);
     }
     getTimeInHours(data);
     printImages(data);
+    isUpVote(data);
 }
 
 function onError(data){
@@ -58,15 +59,32 @@ function getTimeInHours(data){
 
 function printImages(data){
   var grabDataArray = data.data.children;
-  var postHeadings = $('#main p');
+  var postHeadingP = $('#main p');
   grabDataArray.forEach((el, idx) => {
     var grabDataInChildren = el.data.preview.images;
       grabDataInChildren.forEach((child, index) => {
         //console.log(child.source.url, ' url')
-        $(postHeadings).eq(idx).prepend(`<img src='${child.source.url}' width='120px' height='140px'><hr>`);
+        $(postHeadingP).eq(idx).prepend(`<a href='${'https://www.reddit.com' + el.data.permalink}'><img src='${child.source.url}' width='120px' height='140px'></a>`);
       });
   });
 }
+
+//Adds upvotes
+
+function isUpVote(data){
+  var postP = $('#main p');
+  var counter = 1;
+  $(postP).append(`<button class='upvote' type='button'>Upvote</button><hr>`);
+  postP.on(`click`, (evt, idx) => {
+    for(var i = 0; i < postP.length; i++) {
+      $('.upvote').eq(i).append(' ').text(counter);
+
+      return parseInt(counter++);
+    }
+  });
+}
+
+
 
 /* FUNCTION DEFINITION HERE */
 /* TIP: don't forget scope! */

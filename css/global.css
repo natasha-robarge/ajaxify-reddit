@@ -10,6 +10,11 @@ nav ul li {
   clear: both;
 }
 
+h1 {
+  margin: 20px;
+  color: #FFF;
+}
+
 #main p {
   flex: 1;
   text-align: left;
@@ -17,6 +22,10 @@ nav ul li {
 
 #main p img {
   border: 2px solid black;
+}
+
+#main p img:hover {
+  cursor: auto;
 }
 
 #main {
@@ -31,3 +40,36 @@ h5 {
 hr {
   border: 2px dotted black;
 }
+
+.upvote {
+  padding: 10px;
+  position: relative;
+  float: right;
+  bottom: -52px;
+  border-radius: 10%;
+  text-transform: uppercase;
+}
+
+.col-md-8 {
+  font-size: 18px;
+  background-color: #7c61c2;
+}
+
+.navy:hover {
+  text-decoration: line-through;
+  color: #FFF;
+}
+
+.navy {
+  color: #FFF;
+}
+
+.row {
+  background-color: #7c61c2;
+}
+
+/*
+.container {
+  background-color: #ebdbff;
+}
+*/
