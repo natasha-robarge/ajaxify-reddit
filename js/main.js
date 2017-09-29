@@ -28,30 +28,44 @@ function onSuccess(data){
   //object, object, array
   var grabDataArray = data.data.children;
     for(var i = 0; i < grabDataArray.length; i++) {
-      $('#main').append(`<h3> ${grabDataArray[i].data.title} </h3>\n`);
-      $('#main').append(`<h5> ${grabDataArray[i].data.author} to ${grabDataArray[i].data.subreddit_name_prefixed}</h5>`);
+      $('#main').append(`<h3> ${grabDataArray[i].data.title} </h3>\n <hr>`);
+      $('#main').append(`<h5> ${grabDataArray[i].data.author} to ${grabDataArray[i].data.subreddit_name_prefixed}</h5> <p></p>`);
     }
     getTimeInHours(data);
-}
-
-//Get time in hours
-
-function getTimeInHours(data) {
-  var grabDataArray = data.data.children;
-  var postHeadings = $('h5');
-    grabDataArray.forEach((el, index) => {
-      var currentDate = new Date(el.data.created * 1000);
-      //var sec = el.data.created_utc;
-      var dateNow = Date.now();
-      var epochDate = currentDate - dateNow;
-      var currentHours = Math.floor(Math.abs((epochDate) / 1000 / 60 / 60));
-      console.log(currentHours)
-      $(postHeadings).eq(index).prepend(`Submitted ${currentHours} hours ago`);
-    })
+    printImages(data);
 }
 
 function onError(data){
   console.log('Failed!');
+}
+
+//Get time in hours
+
+function getTimeInHours(data){
+  var grabDataArray = data.data.children;
+  var postHeadings = $('h5');
+    grabDataArray.forEach((el, index) => {
+      var currentDate = new Date(el.data.created * 1000);
+      var dateNow = Date.now();
+      var epochDate = currentDate - dateNow;
+      var currentHours = Math.floor(Math.abs((epochDate) / 1000 / 60 / 60));
+      //console.log(currentHours)
+      $(postHeadings).eq(index).prepend(`Submitted ${currentHours} hours ago`);
+    })
+}
+
+//Prints images to div
+
+function printImages(data){
+  var grabDataArray = data.data.children;
+  var postHeadings = $('#main p');
+  grabDataArray.forEach((el, idx) => {
+    var grabDataInChildren = el.data.preview.images;
+      grabDataInChildren.forEach((child, index) => {
+        //console.log(child.source.url, ' url')
+        $(postHeadings).eq(idx).prepend(`<img src='${child.source.url}' width='120px' height='140px'><hr>`);
+      });
+  });
 }
 
 /* FUNCTION DEFINITION HERE */

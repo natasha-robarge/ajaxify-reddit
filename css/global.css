@@ -3,3 +3,31 @@ nav ul li {
   list-style-type: none;
   margin-right: 25px;
 }
+
+.container-info {
+  display: flex;
+  flex-direction: row;
+  clear: both;
+}
+
+#main p {
+  flex: 1;
+  text-align: left;
+}
+
+#main p img {
+  border: 2px solid black;
+}
+
+#main {
+  flex: 2;
+  text-align: right;
+}
+
+h5 {
+  text-align: right;
+}
+
+hr {
+  border: 2px dotted black;
+}
